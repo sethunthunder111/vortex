@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vortex | The Intelligent Search Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Vortex</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="docs.html">Docs</a>
+            <a href="https://github.com/SethunThunder/vortex-search-engine" target="_blank">GitHub</a>
+        </div>
+        <a href="demo.html" class="btn-primary">Try Demo</a>
+    </nav>
+
+    <section class="hero">
+        <h1>The Search Engine<br><span>That Understands You.</span></h1>
+        <p>A powerful, lightweight, and persistent vector-space search engine built for the modern web. Zero dependencies. 100% JavaScript.</p>
+        <div class="hero-btns">
+            <a href="demo.html" class="btn-primary">Live Demo</a>
+            <a href="docs.html" class="btn-secondary">Read Docs</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-icon">🌪️</div>
+            <h3>Fuzzy Search</h3>
+            <p>Typos happen. Vortex fixes them instantly using Levenshtein distance, ensuring your users always find what they're looking for.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🧠</div>
+            <h3>Conversational NLP</h3>
+            <p>Don't just search keywords. Ask questions. Vortex filters out noise and understands intent with smart synonym expansion.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <h3>BM25 Ranking</h3>
+            <p>Powered by the state-of-the-art BM25 probabilistic model, delivering far more relevant results than standard TF-IDF.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💾</div>
+            <h3>Persistence</h3>
+            <p>Save your index to JSON and load it instantly. Perfect for static sites, offline apps, and caching.</p>
+        </div>
+    </section>
+
+    <section class="benchmarks">
+        <h1>Blazing Fast Performance</h1>
+        <div class="stat-grid">
+            <div class="stat-item">
+                <h2>10k+</h2>
+                <p>Ops / Sec</p>
+            </div>
+            <div class="stat-item">
+                <h2>&lt;1ms</h2>
+                <p>Query Time</p>
+            </div>
+            <div class="stat-item">
+                <h2>0</h2>
+                <p>Dependencies</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

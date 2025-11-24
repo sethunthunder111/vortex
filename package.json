@@ -1,0 +1,28 @@
+{
+  "name": "vortex-search-engine",
+  "version": "1.0.0",
+  "description": "A powerful, lightweight, persistent vector-space search engine with NLP capabilities.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests/test_advanced.js"
+  },
+  "files": [
+    "index.js",
+    "knowledgeBase",
+    "dist"
+  ],
+  "keywords": [
+    "search",
+    "nlp",
+    "fuzzy",
+    "vector",
+    "bm25",
+    "levenshtein",
+    "search-engine"
+  ],
+  "author": "Sethun Thunder",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2"
+  }
+}

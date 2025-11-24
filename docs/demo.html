@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vortex | Live Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <!-- Import Vortex Engine -->
+    <script src="vortex.browser.js"></script>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Vortex</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="docs.html">Docs</a>
+            <a href="https://github.com/SethunThunder/vortex-search-engine" target="_blank">GitHub</a>
+        </div>
+        <a href="demo.html" class="btn-primary">Try Demo</a>
+    </nav>
+
+    <div class="demo-container">
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h1 style="font-size: 3rem; margin-bottom: 1rem;">Experience Vortex</h1>
+            <p style="color: #a1a1aa;">Type anything. Try typos like "fiannce" or questions like "how to fix pc".</p>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search for anything..." autofocus>
+        </div>
+
+        <div id="results" class="results-area">
+            <!-- Results will appear here -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // --- DEMO LOGIC ---
+        const engine = new VortexEngine();
+
+        // 1. Load Dummy Data
+        const dummyData = [
+            { id: "1", title: "Financial Freedom", content: "Learn how to manage your money, invest in stocks, and achieve financial independence." },
+            { id: "2", title: "Computer Repair Guide", content: "A complete guide to fixing your broken PC, laptop, or desktop. Troubleshooting hardware issues." },
+            { id: "3", title: "Healthy Eating", content: "The best foods to eat for a healthy life. Fruits, vegetables, and balanced diets." },
+            { id: "4", title: "Space Exploration", content: "Humans are planning to visit Mars. SpaceX and NASA are leading the way to the cosmos." },
+            { id: "5", title: "Javascript Basics", content: "Learn the fundamentals of JS. Variables, loops, functions, and objects." },
+            { id: "6", title: "The Art of War", content: "Ancient strategies for winning conflicts and battles. Sun Tzu's masterpiece." },
+            { id: "7", title: "Gardening 101", content: "How to plant flowers, grow vegetables, and maintain a beautiful garden in your backyard." },
+            { id: "8", title: "History of Rome", content: "The rise and fall of the Roman Empire. Caesars, legions, and the Colosseum." },
+            { id: "9", title: "Quantum Physics", content: "Understanding the subatomic world. Particles, waves, and quantum entanglement." },
+            { id: "10", title: "Best Smartphones 2025", content: "Reviews of the latest phones from Apple, Samsung, and Google. Camera comparisons." },
+            { id: "11", title: "Meditation Techniques", content: "Find inner peace and calm your mind with these simple breathing exercises." },
+            { id: "12", title: "Car Maintenance", content: "How to change oil, check tires, and keep your vehicle running smoothly." },
+            { id: "13", title: "Learning Python", content: "A great language for data science and AI. Easy to learn syntax." },
+            { id: "14", title: "Travel Guide: Japan", content: "Explore Tokyo, Kyoto, and Osaka. Best places to eat sushi and see cherry blossoms." },
+            { id: "15", title: "Fitness at Home", content: "Workouts you can do without equipment. Pushups, squats, and yoga." }
+        ];
+
+        console.log("Indexing documents...");
+        dummyData.forEach(doc => {
+            engine.addDocument(doc.id, doc.title, doc.content);
+        });
+        console.log("Indexing complete!");
+
+        // 2. Search Logic
+        const input = document.getElementById('searchInput');
+        const resultsDiv = document.getElementById('results');
+
+        input.addEventListener('input', (e) => {
+            const query = e.target.value;
+            resultsDiv.innerHTML = ''; // Clear previous
+
+            if (!query.trim()) return;
+
+            const results = engine.search(query);
+
+            if (results.length === 0 || typeof results === 'string') {
+                resultsDiv.innerHTML = `<div style="text-align:center; color: #52525b;">No results found.</div>`;
+                return;
+            }
+
+            results.forEach((res, index) => {
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                card.style.animationDelay = `${index * 0.05}s`;
+                card.innerHTML = `
+                    <h3>${res.title}</h3>
+                    <p>${res.content}</p>
+                    <div class="result-meta">
+                        <span>Score: ${res.score.toFixed(2)}</span>
+                        <span>ID: ${res.id}</span>
+                    </div>
+                `;
+                resultsDiv.appendChild(card);
+            });
+        });
+    </script>
+</body>
+</html>
