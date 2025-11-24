@@ -6,8 +6,9 @@
     <title>Vortex | Documentation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.29.0/themes/prism-tomorrow.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
@@ -19,7 +20,7 @@
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="docs.html">Docs</a>
-            <a href="https://github.com/SethunThunder/vortex-search-engine" target="_blank">GitHub</a>
+            <a href="https://github.com/sethunthunder111/vortex" target="_blank">GitHub</a>
         </div>
         <a href="demo.html" class="btn-primary">Try Demo</a>
     </nav>
@@ -30,15 +31,15 @@
         <div class="docs-section">
             <h2>Installation</h2>
             <p>Install Vortex via NPM to use it in your Node.js projects.</p>
-            <pre><code>npm install vortex-search-engine</code></pre>
+            <pre><code class="language-bash">npm install vortex-search-engine</code></pre>
             <p>Or include the browser bundle directly in your HTML:</p>
-            <pre><code>&lt;script src="vortex.browser.js"&gt;&lt;/script&gt;</code></pre>
+            <pre><code class="language-html">&lt;script src="vortex.browser.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <div class="docs-section">
             <h2>Quick Start</h2>
             <p>Get up and running in seconds.</p>
-            <pre><code>const { VortexEngine } = require("vortex-search-engine");
+            <pre><code class="language-javascript">const { VortexEngine } = require("vortex-search-engine");
 
 const engine = new VortexEngine();
 
@@ -71,12 +72,15 @@ console.log(results);</code></pre>
 
             <h3 style="color: white; margin-top: 2rem;">save(filepath) / load(filepath)</h3>
             <p>Persist your index to disk (Node.js only).</p>
-            <pre><code>engine.save("./index.json");
+            <pre><code class="language-javascript">engine.save("./index.json");
 engine.load("./index.json");</code></pre>
         </div>
 
     </div>
 
     <script src="script.js"></script>
+    <script src="https://unpkg.com/prismjs@1.29.0/prism.js"></script>
+    <script src="https://unpkg.com/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://unpkg.com/prismjs@1.29.0/components/prism-bash.min.js"></script>
 </body>
 </html>

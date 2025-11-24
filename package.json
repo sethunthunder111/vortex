@@ -22,6 +22,8 @@
   ],
   "author": "Sethun Thunder",
   "license": "MIT",
+  "repository": "https://github.com/sethunthunder111/vortex.git",
+  "homepage": "https://sethunthunder111.github.io/vortex/",
   "dependencies": {
     "chalk": "^4.1.2"
   }
