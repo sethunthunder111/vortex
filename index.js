@@ -390,8 +390,6 @@ class VortexEngine {
     this.model.avgDocLen = data.model.avgDocLen;
     this.model.vocab = new Set(data.model.vocab); // Array to Set
 
-    this.model.vocab = new Set(data.model.vocab); // Array to Set
-
     if (this.logging) console.log(`\n${LOG_PREFIX.IO} Engine loaded from ${chalk.underline(filepath)}`);
   }
 }
