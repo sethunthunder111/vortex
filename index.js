@@ -179,6 +179,9 @@ class NLPProcessor {
     let minDistance = Infinity;
 
     vocab.forEach((vocabWord) => {
+      // Optimization: Skip words with length difference > 2
+      if (Math.abs(vocabWord.length - word.length) > 2) return;
+
       const distance = this.levenshtein(word, vocabWord);
       if (distance < minDistance) {
         minDistance = distance;
@@ -206,6 +209,7 @@ class BM25Model {
     this.totalDocLen = 0;
     this.avgDocLen = 0;
     this.vocab = new Set();
+    this.idfCache = new Map();
   }
 
   /**
@@ -222,22 +226,26 @@ class BM25Model {
       this.vocab.add(token);
       this.docFreqs.set(token, (this.docFreqs.get(token) || 0) + 1);
     });
+    this.idfCache.clear();
   }
 
   /**
    * Calculate Inverse Document Frequency (IDF) for BM25
    */
   computeIDF(term) {
+    if (this.idfCache.has(term)) return this.idfCache.get(term);
     const nq = this.docFreqs.get(term) || 0;
     // Standard BM25 IDF formula
-    return Math.log((this.totalDocs - nq + 0.5) / (nq + 0.5) + 1);
+    const idf = Math.log((this.totalDocs - nq + 0.5) / (nq + 0.5) + 1);
+    this.idfCache.set(term, idf);
+    return idf;
   }
 
   /**
    * Score a document against a query term using BM25 formula
    */
-  score(term, docId, docTokens) {
-    const tf = docTokens.filter((t) => t === term).length;
+  score(term, docId, termFreqs) {
+    const tf = (typeof termFreqs[term] === 'number') ? termFreqs[term] : 0;
     if (tf === 0) return 0;
 
     const docLen = this.docLengths.get(docId);
@@ -269,8 +277,14 @@ class VortexEngine {
     const fullText = `${title} ${title} ${title} ${content}`;
     const tokens = this.nlp.tokenize(fullText);
 
+    // Compute Term Frequencies
+    const termFreqs = Object.create(null);
+    for (const t of tokens) {
+      termFreqs[t] = (termFreqs[t] || 0) + 1;
+    }
+
     // Store doc
-    this.documents.push({ id, title, content, tokens });
+    this.documents.push({ id, title, content, tokens, termFreqs });
 
     // Update Math Model
     this.model.train(id, tokens);
@@ -330,7 +344,7 @@ class VortexEngine {
       const doc = this.documents[docIdx];
       let score = 0;
       queryTokens.forEach((term) => {
-        score += this.model.score(term, doc.id, doc.tokens);
+        score += this.model.score(term, doc.id, doc.termFreqs);
       });
       scores.set(docIdx, score);
     });
@@ -378,6 +392,17 @@ class VortexEngine {
     const data = JSON.parse(fs.readFileSync(filepath, "utf-8"));
 
     this.documents = data.documents;
+
+    // Backwards compatibility for old indexes
+    this.documents.forEach((doc) => {
+      if (!doc.termFreqs && doc.tokens) {
+        doc.termFreqs = Object.create(null);
+        for (const t of doc.tokens) {
+          doc.termFreqs[t] = (doc.termFreqs[t] || 0) + 1;
+        }
+      }
+    });
+
     this.index = new Map(data.index); // Array to Map
 
     // Restore BM25 Model
